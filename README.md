@@ -53,22 +53,41 @@ docker run -itd --restart=always --name frp \
 docker exec -it frp sh
 ```
 
+
 #### k8s
+
+```yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frp-config
+  namespace: default
+data:
+  frps.ini: |   # 服务端配置文件，改成自己的
+     [common]
+     bind_port = 7000
+  frpc.ini: |   # 客户端配置文件，改成自己的
+    [common]
+    server_addr = xxx.xxx.xxx.xxx
+    server_port = 7000
+EOF
+```
 
 ```yaml
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frp
+  name: frps
   namespace: default
   labels:
-    app: frp
+    app: frps
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frp
+      app: frps
   strategy:
     rollingUpdate: 
       maxSurge: 1
@@ -76,15 +95,26 @@ spec:
   template:
     metadata:
       labels:
-        app: frp
+        app: frps
     spec:
       hostNetwork: True
       dnsPolicy: ClusterFirstWithHostNet
       restartPolicy: "Always"
       containers:
-      - name: "frp"
-        image: "frp:latest"
-        imagePullPolicy: "Never"
+      - name: "frps"
+        image: "dovej/frp-dockerfile:latest"
+        imagePullPolicy: "Always"
         command: ["/opt/frp/frps","-c","/opt/frp/frps.ini"]
+        volumeMounts:
+          - name: frps
+            mountPath: /opt/frp/frps.ini
+            subPath: frps.ini
+      volumes:
+        - name: frps
+          configMap:
+            name: frp-config
+            items:
+              - key: frps.ini
+                path: frps.ini
 EOF
 ```
