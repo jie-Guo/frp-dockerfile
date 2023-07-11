@@ -14,10 +14,10 @@ https://gofrp.org/docs/setup/
 #### **docker**
 
 ```dockerfile
-docker pull alpine:3.18.2
+docker pull alpine:3.18
 
 cat > Dockerfile <<'EOF'
-FROM alpine:3.18.2
+FROM alpine:3.18
 
 # 重命名命令在下面有
 ADD frp.tar.gz /opt/
