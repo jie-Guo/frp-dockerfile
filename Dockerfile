@@ -1,4 +1,4 @@
-docker pull alpine:3.18.2
+docker pull alpine:3.18
 
 cat > Dockerfile <<'EOF'
 FROM alpine:3.18.2
