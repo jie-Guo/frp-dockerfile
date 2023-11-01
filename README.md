@@ -75,6 +75,9 @@ EOF
 ```
 
 ```yaml
+# 更新
+ k set image deploy/frps frps=docker.io/dovej/frp-dockerfile
+
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
