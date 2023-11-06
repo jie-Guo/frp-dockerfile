@@ -43,7 +43,7 @@ S_OR_C=frps
 docker build . -t frp:latest
 
 # 启动
-docker run -itd --restart=always --name frp \
+docker run -itd --restart=always --name $S_OR_C \
   --network host \
   -v ./$S_OR_C.ini:/opt/frp/$S_OR_C.ini \
   frp \
