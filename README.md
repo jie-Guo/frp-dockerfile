@@ -47,7 +47,7 @@ docker build . -t $FRP_IMG_NAME
 docker run -itd --restart=always --name $S_OR_C \
   --network host \
   -v ./$S_OR_C.ini:/opt/frp/$S_OR_C.ini \
-  frp \
+  $FRP_IMG_NAME \
   /opt/frp/$S_OR_C -c /opt/frp/$S_OR_C.ini
 
 # 进容器
