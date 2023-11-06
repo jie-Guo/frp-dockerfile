@@ -40,7 +40,8 @@ mv frp*.tar.gz frp.tar.gz
 S_OR_C=frps
 
 # 构建镜像
-docker build . -t frp:latest
+FRP_IMG_NAME=frp:latest
+docker build . -t $FRP_IMG_NAME
 
 # 启动
 docker run -itd --restart=always --name $S_OR_C \
