@@ -23,4 +23,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: dovej/frp-dockerfile:latest
+          tags: dovej/frp-dockerfile:v0.61.0
